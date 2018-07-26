@@ -29,7 +29,7 @@ class Application:
 
     def get_username_from_nav_bar(self):
         wd = self.wd
-        wd.find_element_by_id("username_logged_in").text
+        wd.find_element_by_id("username_logged_in")
         return self
 
     def logout(self):
