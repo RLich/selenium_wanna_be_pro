@@ -1,6 +1,7 @@
 import pytest
 from selenium.webdriver.chrome.webdriver import WebDriver
 from application import Application
+from Config.cfg_att import Config
 
 
 @pytest.fixture
@@ -10,6 +11,6 @@ def app(request):
     return fixture
 
 def test_login(app):
-    app.login(username="rafal", password="rafaltestowy")
+    app.login(username=Config.username, password=Config.password)
 
 

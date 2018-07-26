@@ -1,4 +1,5 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
+from Config.cfg_att import Config
 
 class Application:
     def __init__(self):
@@ -7,7 +8,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://forum.attnauka.webd.pro/")
+        wd.get(Config.main_url)
 
     def login(self, username, password):
         wd = self.wd
