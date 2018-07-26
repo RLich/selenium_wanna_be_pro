@@ -12,5 +12,4 @@ def app(request):
 
 def test_login(app):
     app.login(username=Config.username, password=Config.password)
-
-
+    app.logout()
