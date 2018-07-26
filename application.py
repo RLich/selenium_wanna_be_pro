@@ -1,6 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
-import time
+
 
 class Application:
     def __init__(self):
@@ -25,7 +25,6 @@ class Application:
 
         # zatwierdzenie logowania
         wd.find_element_by_name("login").click()
-        assert wd.find_element_by_id("username_logged_in") == Config.username
 
     def logout(self):
         wd = self.wd
