@@ -25,10 +25,11 @@ class Application:
 
         # zatwierdzenie logowania
         wd.find_element_by_name("login").click()
+        wd.find_element_by_id("username_logged_in").click()
 
     def logout(self):
         wd = self.wd
-        wd.find_element_by_class_name("username").click()
+        wd.find_element_by_id("username_logged_in").click()
 
 
     def destroy(self):
