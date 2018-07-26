@@ -1,4 +1,5 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
+from Config.cfg_att import Config
 
 class Application:
     def __init__(self):
@@ -7,7 +8,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://forum.attnauka.webd.pro/")
+        wd.get(Config.main_url)
 
     def login(self, username, password):
         wd = self.wd
@@ -15,11 +16,11 @@ class Application:
 
         # wpisywanie użytkownika
         wd.find_element_by_name("username").click()
-        wd.find_element_by_name("username").send_keys(username)
+        wd.find_element_by_name("username").send_keys(Config.username)
 
         # wpisywanie hasła
         wd.find_element_by_name("password").click()
-        wd.find_element_by_name("password").send_keys(password)
+        wd.find_element_by_name("password").send_keys(Config.password)
 
         # potwierdzanie logowania
         wd.find_element_by_name("login").click()
