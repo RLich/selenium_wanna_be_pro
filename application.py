@@ -16,11 +16,11 @@ class Application:
 
         # wpisywanie użytkownika
         wd.find_element_by_name("username").click()
-        wd.find_element_by_name("username").send_keys(Config.username)
+        wd.find_element_by_name("username").send_keys(username)
 
         # wpisywanie hasła
         wd.find_element_by_name("password").click()
-        wd.find_element_by_name("password").send_keys(Config.password)
+        wd.find_element_by_name("password").send_keys(password)
 
         # potwierdzanie logowania
         wd.find_element_by_name("login").click()
