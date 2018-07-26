@@ -27,6 +27,11 @@ class Application:
         wd.find_element_by_name("login").click()
         wd.find_element_by_id("username_logged_in").click()
 
+    def get_username_from_nav_bar(self):
+        wd = self.wd
+        wd.find_element_by_id("username_logged_in").text
+        return self
+
     def logout(self):
         wd = self.wd
         wd.find_element_by_id("username_logged_in").click()

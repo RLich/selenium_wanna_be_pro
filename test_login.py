@@ -12,4 +12,4 @@ def app(request):
 
 def test_login(app):
     app.login(username=Config.username, password=Config.password)
-    assert WebDriver.find_element_by_xpath("//*[@id='username_logged_in']").text == Config.username
+    assert app.get_username_from_nav_bar == Config.username
