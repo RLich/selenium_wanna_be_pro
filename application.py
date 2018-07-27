@@ -39,5 +39,9 @@ class Application:
         wd.find_element_by_id("username_logged_in").click()
         wd.find_element_by_xpath("//*[@title='Logout']").click()
 
+    def page_title(self):
+        wd = self.wd
+        wd.
+
     def destroy(self):
         self.wd.quit()
