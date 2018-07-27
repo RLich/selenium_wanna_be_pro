@@ -10,4 +10,4 @@ def app(request):
 
 def test_site_title(app):
     app.open_home_page()
-    assert app.get_site_title == "ATT Nauka - Index page"
+    app.get_site_title.assertIn("ATT Nauka - Index page", app.get_site_title)
