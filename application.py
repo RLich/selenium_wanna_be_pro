@@ -1,6 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
-
+import time
 
 class Application:
     def __init__(self):
@@ -30,10 +30,14 @@ class Application:
         wd = self.wd
         return wd.find_element_by_id("username_logged_in").text
 
+    def get_login_from_nav_bar(self):
+        wd = self.wd
+        return wd.find_element_by_xpath("//*[@title='Login']").text
+
     def logout(self):
         wd = self.wd
         wd.find_element_by_id("username_logged_in").click()
-
+        wd.find_element_by_xpath("//*[@title='Logout']").click()
 
     def destroy(self):
         self.wd.quit()
