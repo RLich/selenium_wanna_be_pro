@@ -12,4 +12,4 @@ def app(request):
 
 def test_login(app):
     app.login(username=Config.username, password=Config.password)
-    assert WebDriver().find_element_by_id("username_logged_in") == Config.username
+    assert WebDriver().find_element_by_id("username_logged_in").text == Config.username
