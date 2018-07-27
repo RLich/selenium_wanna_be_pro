@@ -1,8 +1,13 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
-import unittest
+from application import Application
+import pytest
 
-driver = WebDriver()
-driver.get("http://forum.attnauka.webd.pro/index")
-assert driver.title == "ATT Nauka - Index page"
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
 
-driver.quit()
+def test_site_title(app):
+    app.open_home_page()
+    assert app.get_site_title == "ATT Nauka - Index page"

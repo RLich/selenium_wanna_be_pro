@@ -41,7 +41,7 @@ class Application:
 
     def get_site_title(self):
         wd = self.wd
-        return wd.find_element_by_xpath("//*[@title='ATT Nauka - Index page']").text
+        return wd.title
 
     def destroy(self):
         self.wd.quit()
