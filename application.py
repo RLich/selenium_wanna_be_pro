@@ -45,7 +45,7 @@ class Application:
 
     def nav_to_subforum(self):
         wd = self.wd
-        wd.find_element_by_partial_link_text("./viewforum.php?f=3").click()
+        wd.find_element_by_class_name("forumtitle").click()
 
         href = "./viewforum.php?f=3"
 
