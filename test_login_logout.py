@@ -1,5 +1,4 @@
 import pytest
-from selenium.webdriver.chrome.webdriver import WebDriver
 from application import Application
 from Config.cfg_att import Config
 

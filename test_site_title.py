@@ -1,4 +1,3 @@
-from selenium.webdriver.chrome.webdriver import WebDriver
 from application import Application
 import pytest
 

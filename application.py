@@ -43,5 +43,11 @@ class Application:
         wd = self.wd
         return wd.title
 
+    def nav_to_subforum(self):
+        wd = self.wd
+        wd.find_element_by_partial_link_text("./viewforum.php?f=3").click()
+
+        href = "./viewforum.php?f=3"
+
     def destroy(self):
         self.wd.quit()
