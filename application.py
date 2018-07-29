@@ -1,6 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
-import time
+from test_enter_subforum import
 
 class Application:
     def __init__(self):
@@ -47,7 +47,9 @@ class Application:
         wd = self.wd
         wd.find_element_by_class_name("forumtitle").click()
 
-        href = "./viewforum.php?f=3"
+    def nav_to_chosen_subforum(selfs):
+        wd = self.wd
+        wd.find_element_by_css_selector("a[href$='viewforum.php?f=4']").click()
 
     def destroy(self):
         self.wd.quit()

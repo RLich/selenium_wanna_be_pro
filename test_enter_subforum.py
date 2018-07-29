@@ -10,6 +10,9 @@ def app(request):
     request.addfinalizer(fixture.destroy)
     return fixture
 
+def subforum_number():
+    subforum_link = "a[href$='viewforum.php?f=4"
+
 def test_enter_subforum(app):
     app.login(username=Config.username, password=Config.password)
     app.nav_to_subforum()
