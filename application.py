@@ -1,6 +1,5 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
-import time
 
 class Application:
     def __init__(self):
@@ -71,7 +70,6 @@ class Application:
         wd.find_element_by_id("message").click()
         wd.find_element_by_id("message").send_keys(topic_text)
         wd.find_element_by_name("post").click()
-        time.sleep(1)
         wd.find_element_by_id("logo").click()
 
     def check_last_subject_name(self):
