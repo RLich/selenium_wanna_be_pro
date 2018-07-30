@@ -12,10 +12,9 @@ def app(request):
 
 def test_add_topic(app):
     app.login(Config.username, Config.password)
-    app.enter_subforum_by_name(name="Marcin")
-    assert app.wd.find_element_by_class_name('forum-title').text == 'Marcin'
-    app.wd.find_element_by_xpath("//*[@title='Post a new topic']").click()
-    app.wd.find_element_by_id("subject").click()
-    app.wd.find_element_by_id("subject").send_keys("test1")
-    time.sleep(2)
+    app.enter_subforum_by_name(name="Rafał")
+    assert app.wd.find_element_by_class_name('forum-title').text == 'Rafał'
+    app.create_new_topic(topic_title = "kolejny test", topic_text = "kolejny teścik")
+
+    assert app.check_last_subject_name() == "topic_title"
 

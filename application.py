@@ -1,5 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
+import time
 
 class Application:
     def __init__(self):
@@ -61,6 +62,21 @@ class Application:
     def check_subforum_name(self):
         wd = self.wd
         return
+
+    def create_new_topic(self, topic_title, topic_text):
+        wd = self.wd
+        wd.find_element_by_xpath("//*[@title='Post a new topic']").click()
+        wd.find_element_by_id("subject").click()
+        wd.find_element_by_id("subject").send_keys(topic_title)
+        wd.find_element_by_id("message").click()
+        wd.find_element_by_id("message").send_keys(topic_text)
+        wd.find_element_by_name("post").click()
+        time.sleep(1)
+        wd.find_element_by_id("logo").click()
+
+    def check_last_subject_name(self):
+        wd = self.wd
+        return wd.find_element_by_class_name("lastsubject").text
 
     def destroy(self):
         self.wd.quit()
