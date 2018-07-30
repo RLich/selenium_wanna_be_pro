@@ -17,7 +17,9 @@ for elements[0] in elements:
         elements[0].click()
         break
 assert driver.find_element_by_class_name('forum-title').text == 'Konrad'
-
+driver.find_element_by_xpath("//*[@title='Post a new topic']").click()
+driver.find_element_by_id("subject").click()
+driver.find_element_by_id("subject").send_keys("test1")
 
 
 time.sleep(3)
