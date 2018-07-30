@@ -19,6 +19,7 @@ for elements[0] in elements:
 assert driver.find_element_by_class_name('forum-title').text == 'Konrad'
 
 
+
 time.sleep(3)
 
 driver.quit()
