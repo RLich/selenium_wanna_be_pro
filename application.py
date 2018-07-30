@@ -1,6 +1,5 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
-from test_enter_subforum import
 
 class Application:
     def __init__(self):
@@ -43,13 +42,21 @@ class Application:
         wd = self.wd
         return wd.title
 
-    def nav_to_subforum(self):
+    def nav_to_first_subforum(self):
         wd = self.wd
         wd.find_element_by_class_name("forumtitle").click()
 
-    def nav_to_chosen_subforum(selfs):
+    def nav_to_subforum_by_href(self):
         wd = self.wd
         wd.find_element_by_css_selector("a[href$='viewforum.php?f=4']").click()
+
+    def enter_subforum_by_name(self):
+        wd = self.wd
+        return wd.find_element_by_class_name("forumtitle").text
+
+    def check_subforum_name(self):
+        wd = self.wd
+        return
 
     def destroy(self):
         self.wd.quit()

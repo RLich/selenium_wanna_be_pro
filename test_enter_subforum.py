@@ -1,19 +1,10 @@
-import pytest
-from application import Application
-from Config.cfg_att import Config
-import time
+from selenium.webdriver.chrome.webdriver import WebDriver
 
+driver = WebDriver()
+driver.get('http://forum.attnauka.webd.pro/index.php')
+element = driver.find_element_by_class_name('forumtitle')
 
-@pytest.fixture
-def app(request):
-    fixture = Application()
-    request.addfinalizer(fixture.destroy)
-    return fixture
+element_text = element.text
 
-def subforum_number():
-    subforum_link = "a[href$='viewforum.php?f=4"
-
-def test_enter_subforum(app):
-    app.login(username=Config.username, password=Config.password)
-    app.nav_to_subforum()
-    time.sleep(3)
+print (element_text)
+driver.quit()
