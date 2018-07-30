@@ -50,9 +50,13 @@ class Application:
         wd = self.wd
         wd.find_element_by_css_selector("a[href$='viewforum.php?f=4']").click()
 
-    def enter_subforum_by_name(self):
+    def enter_subforum_by_name(self, name):
         wd = self.wd
-        return wd.find_element_by_class_name("forumtitle").text
+        elements = wd.find_elements_by_class_name('forumtitle')
+        for elements[0] in elements:
+            if elements[0].text == name:
+                elements[0].click()
+                break
 
     def check_subforum_name(self):
         wd = self.wd
