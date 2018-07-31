@@ -1,5 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
+import time
 
 class Application:
     def __init__(self):
@@ -61,11 +62,17 @@ class Application:
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
         wd.find_element_by_xpath("//*[@title='Post a new topic']").click()
+        time.sleep(0.5)
         wd.find_element_by_id("subject").click()
+        time.sleep(0.5)
         wd.find_element_by_id("subject").send_keys(topic_title)
+        time.sleep(0.5)
         wd.find_element_by_id("message").click()
+        time.sleep(0.5)
         wd.find_element_by_id("message").send_keys(topic_text)
+        time.sleep(0.5)
         wd.find_element_by_name("post").click()
+        time.sleep(1)
         wd.find_element_by_id("logo").click()
 
     def enter_last_subject(self, topic_title):
@@ -86,8 +93,11 @@ class Application:
     def topic_cleanup(self):
         wd = self.wd
         wd.find_element_by_class_name("lastsubject").click()
+        time.sleep(0.5)
         wd.find_element_by_xpath("//*[@title='Delete post']").click()
+        time.sleep(0.5)
         wd.find_element_by_name("delete_permanent").click()
+        time.sleep(0.5)
         wd.find_element_by_name("confirm").click()
 
 
