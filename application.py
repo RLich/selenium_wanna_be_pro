@@ -71,17 +71,17 @@ class Application:
     def enter_last_subject(self, topic_title):
         wd = self.wd
         elements = wd.find_element_by_class_name("lastsubject")
-        for subforum in elements:
-            if subforum.text == topic_title:
-                subforum.click()
+        for topics in elements:
+            if topics.text == topic_title:
+                topics.click()
                 break
 
-    def check_last_subject_name(self, topic_title):
+    def get_last_subject_name(self):
         wd = self.wd
-        elements = wd.find_element_by_class_name("lastsubject")
-        for subforum in elements:
-            if subforum.text == topic_title:
-                return subforum
+        elements = wd.find_elements_by_class_name("lastsubject")
+        for topics in elements:
+            if topics.text == "new topic test":
+                return topics.text
 
     def topic_cleanup(self):
         wd = self.wd

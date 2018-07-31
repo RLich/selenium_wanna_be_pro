@@ -17,8 +17,8 @@ def test_add_topic(app):
     app.enter_subforum_by_name(name)
     assert app.wd.find_element_by_class_name('forum-title').text == name
     app.create_new_topic(topic_title, topic_text = "kolejny teścik")
-    assert app.check_last_subject_name().text == topic_title
+    assert app.get_last_subject_name() == topic_title
     app.topic_cleanup()
-    time.sleep(3)
+    time.sleep(5)
     app.wd.find_element_by_id("logo").click()
     assert app.check_last_subject_name() != topic_title
