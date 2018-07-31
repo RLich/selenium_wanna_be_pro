@@ -58,10 +58,6 @@ class Application:
                 elements[0].click()
                 break
 
-    def check_subforum_name(self):
-        wd = self.wd
-        return
-
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
         wd.find_element_by_xpath("//*[@title='Post a new topic']").click()
@@ -72,9 +68,15 @@ class Application:
         wd.find_element_by_name("post").click()
         wd.find_element_by_id("logo").click()
 
-    def check_last_subject_name(self):
+    def eneter_last_subject(self, topic_title):
         wd = self.wd
-        return wd.find_element_by_class_name("lastsubject").text
+        elements = wd.find_element_by_class_name("lastsubject")
+        for elements[0] in elements:
+            if elements[0].text == topic_title:
+                elements[0].click()
+                break
+
+
 
     def topic_cleanup(self):
         wd = self.wd
