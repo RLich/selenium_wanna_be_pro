@@ -76,5 +76,14 @@ class Application:
         wd = self.wd
         return wd.find_element_by_class_name("lastsubject").text
 
+    def topic_cleanup(self):
+        wd = self.wd
+        wd.find_element_by_class_name("lastsubject").click()
+        wd.find_element_by_xpath("//*[@title='Delete post']").click()
+        wd.find_element_by_name("delete_permanent").click()
+        wd.find_element_by_name("confirm").click()
+
+
+
     def destroy(self):
         self.wd.quit()
