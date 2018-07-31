@@ -68,21 +68,20 @@ class Application:
         wd.find_element_by_name("post").click()
         wd.find_element_by_id("logo").click()
 
-    def eneter_last_subject(self, topic_title):
+    def enter_last_subject(self, topic_title):
         wd = self.wd
         elements = wd.find_element_by_class_name("lastsubject")
-        for elements[0] in elements:
-            if elements[0].text == topic_title:
-                elements[0].click()
+        for subforum in elements:
+            if subforum.text == topic_title:
+                subforum.click()
                 break
 
     def check_last_subject_name(self, topic_title):
         wd = self.wd
         elements = wd.find_element_by_class_name("lastsubject")
-        for elements[0] in elements:
-            if elements[0].text == topic_title:
-                return elements[0].text
-
+        for subforum in elements:
+            if subforum.text == topic_title:
+                return subforum
 
     def topic_cleanup(self):
         wd = self.wd
