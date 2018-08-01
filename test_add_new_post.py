@@ -16,5 +16,6 @@ def test_add_topic(app):
     reply = "test reply"
     app.login(Config.username1, Config.password1)
     app.enter_subforum_by_name(name)
-    app.wd.find_element_by_class_name("topictitle").click()
+    app.create_new_topic(topic_title, topic_text = "kolejny tescik")
+    app.post_a_reply(reply)
     assert app.get_post_content(reply) == reply

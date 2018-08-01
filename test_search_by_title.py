@@ -10,6 +10,6 @@ def app(request):
     return fixture
 
 def test_earch_by_title(app):
-    app.login(Config.username, Config.password)
+    app.login(Config.username1, Config.password1)
     app.search_by_title()
     assert app.wd.find_element_by_css_selector(".posthilit").text == "test"

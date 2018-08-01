@@ -11,6 +11,6 @@ def app(request):
     return fixture
 
 def test_enter_subforum(app):
-    app.login(username=Config.username, password=Config.password)
+    app.login(username=Config.username1, password=Config.password1)
     app.nav_to_first_subforum()
     time.sleep(3)

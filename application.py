@@ -107,7 +107,33 @@ class Application:
         wd.find_element_by_id("keywords").send_keys("test")
         wd.find_element_by_xpath("//*[@title='Search']").click()
 
+    def post_a_reply(self, reply):
+        wd = self.wd
+        wd.find_element_by_xpath("//*[@title='Post a reply']").click()
+        time.sleep(0.5)
+        wd.find_element_by_id("message").click()
+        time.sleep(0.5)
+        wd.find_element_by_id("message").send_keys(reply)
+        time.sleep(0.5)
+        wd.find_element_by_name("post").click()
 
+    def get_post_content(self, reply):
+        wd = self.wd
+        elements = wd.find_elements_by_class_name("content")
+        for post in elements:
+            if post.text == reply:
+                return post.text
+
+    def post_cleanup(self, topic_title):
+        wd = self.wd
+        elements = wd.find_elements_by_class_name("topictitle")
+        for topic in elements:
+            if topic.text == topic_title:
+                topic.click()
+                break
+        wd.find_element_by_xpath("//*[@title='Delete post']").click()
+        wd.find_element_by_name("delete_permanent").click()
+        wd.find_element_by_name("confirm").click()
 
     def destroy(self):
         self.wd.quit()

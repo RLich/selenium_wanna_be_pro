@@ -13,7 +13,7 @@ def app(request):
 def test_add_topic(app):
     topic_title = "new topic test"
     name = "Konrad"
-    app.login(Config.username, Config.password)
+    app.login(Config.username1, Config.password1)
     app.enter_subforum_by_name(name)
     app.create_new_topic(topic_title, topic_text = "kolejny tescik")
     app.wd.find_element_by_xpath("//*[@title='Konrad']").click()
