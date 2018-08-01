@@ -124,13 +124,12 @@ class Application:
             if post.text == reply:
                 return post.text
 
-    def post_cleanup(self, topic_title):
+    def post_and_topic_cleanup(self):
         wd = self.wd
-        elements = wd.find_elements_by_class_name("topictitle")
-        for topic in elements:
-            if topic.text == topic_title:
-                topic.click()
-                break
+        wd.find_element_by_xpath("//*[@title='Delete post']").click()
+        wd.find_element_by_name("delete_permanent").click()
+        wd.find_element_by_name("confirm").click()
+        time.sleep(3)
         wd.find_element_by_xpath("//*[@title='Delete post']").click()
         wd.find_element_by_name("delete_permanent").click()
         wd.find_element_by_name("confirm").click()

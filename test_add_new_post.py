@@ -10,7 +10,7 @@ def app(request):
     request.addfinalizer(fixture.destroy)
     return fixture
 
-def test_add_topic(app):
+def test_add_new_post(app):
     topic_title = "new topic test 2"
     name = "Marcin"
     reply = "test reply"
