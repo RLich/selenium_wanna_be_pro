@@ -87,6 +87,7 @@ class Application:
 
     def get_name_of_topic_title(self, topic_title):
         wd = self.wd
+        wd.find_element_by_xpath("//*[@title='Marcin']").click()
         elements = wd.find_elements_by_class_name("topictitle")
         for topic in elements:
             if topic.text == topic_title:
@@ -106,7 +107,6 @@ class Application:
     def search_by_title(self):
         wd = self.wd
         wd.find_element_by_id("keywords").clear()
-                                        # clear()
         wd.find_element_by_id("keywords").send_keys("test")
         wd.find_element_by_xpath("//*[@title='Search']").click()
 
