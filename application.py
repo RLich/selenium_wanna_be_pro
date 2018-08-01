@@ -98,6 +98,12 @@ class Application:
         wd.find_element_by_name("delete_permanent").click()
         wd.find_element_by_name("confirm").click()
 
+    def search_by_title(self):
+        wd = self.wd
+        wd.find_element_by_id("keywords").click()
+        wd.find_element_by_id("keywords").send_keys("test")
+        wd.find_element_by_xpath("//*[@title='Search']").click()
+
 
 
     def destroy(self):
