@@ -2,6 +2,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from Config.cfg_att import Config
 import time
 
+
 class Application:
     def __init__(self):
         self.wd = WebDriver()
@@ -93,11 +94,8 @@ class Application:
     def topic_cleanup(self):
         wd = self.wd
         wd.find_element_by_class_name("lastsubject").click()
-        time.sleep(0.5)
         wd.find_element_by_xpath("//*[@title='Delete post']").click()
-        time.sleep(0.5)
         wd.find_element_by_name("delete_permanent").click()
-        time.sleep(0.5)
         wd.find_element_by_name("confirm").click()
 
 

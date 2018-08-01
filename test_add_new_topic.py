@@ -11,8 +11,8 @@ def app(request):
     return fixture
 
 def test_add_topic(app):
-    topic_title = "new topic test"
     name = "Konrad"
+    topic_title = "new topic test"
     app.login(Config.username, Config.password)
     app.enter_subforum_by_name(name)
     assert app.wd.find_element_by_class_name('forum-title').text == name
@@ -21,4 +21,4 @@ def test_add_topic(app):
     app.topic_cleanup()
     time.sleep(5)
     app.wd.find_element_by_id("logo").click()
-    assert app.check_last_subject_name() != topic_title
+    assert app.get_last_subject_name() != topic_title
