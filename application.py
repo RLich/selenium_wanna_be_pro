@@ -55,9 +55,9 @@ class Application:
     def enter_subforum_by_name(self, name):
         wd = self.wd
         elements = wd.find_elements_by_class_name('forumtitle')
-        for elements[0] in elements:
-            if elements[0].text == name:
-                elements[0].click()
+        for user in elements:
+            if user.text == name:
+                user.click()
                 break
 
     def create_new_topic(self, topic_title, topic_text):
@@ -74,7 +74,6 @@ class Application:
         time.sleep(0.5)
         wd.find_element_by_name("post").click()
         time.sleep(1)
-        wd.find_element_by_id("logo").click()
 
     def enter_last_subject(self, topic_title):
         wd = self.wd
@@ -84,16 +83,20 @@ class Application:
                 topics.click()
                 break
 
-    def get_last_subject_name(self):
+    def get_name_of_topic_title(self, topic_title):
         wd = self.wd
-        elements = wd.find_elements_by_class_name("lastsubject")
-        for topics in elements:
-            if topics.text == "new topic test":
-                return topics.text
+        elements = wd.find_elements_by_class_name("topictitle")
+        for topic in elements:
+            if topic.text == topic_title:
+                return topic.text
 
-    def topic_cleanup(self):
+    def topic_cleanup(self, topic_title):
         wd = self.wd
-        wd.find_element_by_class_name("lastsubject").click()
+        elements = wd.find_elements_by_class_name("topictitle")
+        for topic in elements:
+            if topic.text == topic_title:
+                topic.click()
+                break
         wd.find_element_by_xpath("//*[@title='Delete post']").click()
         wd.find_element_by_name("delete_permanent").click()
         wd.find_element_by_name("confirm").click()

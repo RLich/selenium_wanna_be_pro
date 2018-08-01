@@ -11,14 +11,11 @@ def app(request):
     return fixture
 
 def test_add_topic(app):
-    name = "Konrad"
     topic_title = "new topic test"
+    name = "Konrad"
     app.login(Config.username, Config.password)
     app.enter_subforum_by_name(name)
-    assert app.wd.find_element_by_class_name('forum-title').text == name
-    app.create_new_topic(topic_title, topic_text = "kolejny teścik")
-    assert app.get_last_subject_name() == topic_title
-    app.topic_cleanup()
-    time.sleep(5)
-    app.wd.find_element_by_id("logo").click()
-    assert app.get_last_subject_name() != topic_title
+    app.create_new_topic(topic_title, topic_text = "kolejny tescik")
+    app.wd.find_element_by_xpath("//*[@title='Konrad']").click()
+    assert app.get_name_of_topic_title(topic_title) == topic_title
+    app.topic_cleanup(topic_title)
