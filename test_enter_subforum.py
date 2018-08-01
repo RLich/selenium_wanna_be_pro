@@ -11,7 +11,5 @@ def app(request):
 
 def test_enter_subforum_by_name(app):
     app.login(Config.username1, Config.password1)
-    app.enter_subforum_by_name(name="Marcin")
+    app.enter_subforum_by_name("Marcin")
     assert app.wd.find_element_by_class_name('forum-title').text == 'Marcin'
-    app.wd.find_element_by_class_name("jumpbox-return").click()
-    assert app.get_username_from_nav_bar() == Config.username1

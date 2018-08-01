@@ -1,4 +1,8 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+
 from Config.cfg_att import Config
 import time
 
@@ -60,20 +64,18 @@ class Application:
                 user.click()
                 break
 
-    def create_new_topic(self, topic_title, topic_text):
+    def create_new_topic(self, topic_title):
         wd = self.wd
+        wait = WebDriverWait(wd, 10)
         wd.find_element_by_xpath("//*[@title='Post a new topic']").click()
-        time.sleep(0.5)
-        wd.find_element_by_id("subject").click()
-        time.sleep(0.5)
+        wait.until(expected_conditions.visibility_of_element_located(By.ID("subject")))
+        wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(topic_title)
-        time.sleep(0.5)
-        wd.find_element_by_id("message").click()
-        time.sleep(0.5)
-        wd.find_element_by_id("message").send_keys(topic_text)
-        time.sleep(0.5)
+        wait.until(expected_conditions.visibility_of_element_located(By.ID("message")))
+        wd.find_element_by_id("message").clear()
+        wd.find_element_by_id("message").send_keys("testowy tekst")
+        wait.until(expected_conditions.visibility_of_element_located(By.NAME("post")))
         wd.find_element_by_name("post").click()
-        time.sleep(1)
 
     def enter_last_subject(self, topic_title):
         wd = self.wd
@@ -103,18 +105,20 @@ class Application:
 
     def search_by_title(self):
         wd = self.wd
-        wd.find_element_by_id("keywords").click()
+        wd.find_element_by_id("keywords").clear()
+                                        # clear()
         wd.find_element_by_id("keywords").send_keys("test")
         wd.find_element_by_xpath("//*[@title='Search']").click()
 
     def post_a_reply(self, reply):
         wd = self.wd
+        wait = WebDriverWait(wd, 10)
         wd.find_element_by_xpath("//*[@title='Post a reply']").click()
-        time.sleep(0.5)
+        wait.until(expected_conditions.visibility_of_element_located(By.ID("message")))
         wd.find_element_by_id("message").click()
-        time.sleep(0.5)
+        wait.until(expected_conditions.visibility_of_element_located(By.ID("message")))
         wd.find_element_by_id("message").send_keys(reply)
-        time.sleep(0.5)
+        wait.until(expected_conditions.visibility_of_element_located(By.NAME("post")))
         wd.find_element_by_name("post").click()
 
     def get_post_content(self, reply):
@@ -136,3 +140,8 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
+    def dupa(self):
+        wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        wait.until(expected_conditions.visibility_of_element_located(By.Name("post")))
