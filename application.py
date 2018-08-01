@@ -64,17 +64,17 @@ class Application:
                 user.click()
                 break
 
-    def create_new_topic(self, topic_title):
+    def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
         wait = WebDriverWait(wd, 10)
         wd.find_element_by_xpath("//*[@title='Post a new topic']").click()
-        wait.until(expected_conditions.visibility_of_element_located(By.ID("subject")))
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "subject")))
         wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(topic_title)
-        wait.until(expected_conditions.visibility_of_element_located(By.ID("message")))
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
         wd.find_element_by_id("message").clear()
-        wd.find_element_by_id("message").send_keys("testowy tekst")
-        wait.until(expected_conditions.visibility_of_element_located(By.NAME("post")))
+        wd.find_element_by_id("message").send_keys(topic_text)
+        wait.until(expected_conditions.visibility_of_element_located((By.NAME, "post")))
         wd.find_element_by_name("post").click()
 
     def enter_last_subject(self, topic_title):
@@ -114,11 +114,10 @@ class Application:
         wd = self.wd
         wait = WebDriverWait(wd, 10)
         wd.find_element_by_xpath("//*[@title='Post a reply']").click()
-        wait.until(expected_conditions.visibility_of_element_located(By.ID("message")))
-        wd.find_element_by_id("message").click()
-        wait.until(expected_conditions.visibility_of_element_located(By.ID("message")))
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
+        wd.find_element_by_id("message").clear()
         wd.find_element_by_id("message").send_keys(reply)
-        wait.until(expected_conditions.visibility_of_element_located(By.NAME("post")))
+        wait.until(expected_conditions.visibility_of_element_located((By.NAME, "post")))
         wd.find_element_by_name("post").click()
 
     def get_post_content(self, reply):
@@ -140,8 +139,3 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
-
-    def dupa(self):
-        wd = self.wd
-        wait = WebDriverWait(wd, 10)
-        wait.until(expected_conditions.visibility_of_element_located(By.Name("post")))

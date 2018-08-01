@@ -1,7 +1,6 @@
 import pytest
 from application import Application
 from Config.cfg_att import Config
-import time
 
 
 @pytest.fixture
@@ -20,10 +19,10 @@ def test_add_topic(app):
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(max_len))])
     
     """
-    name = "Konrad"
+    name = "Marcin"
     app.login(Config.username1, Config.password1)
     app.enter_subforum_by_name(name)
-    app.create_new_topic(topic_title)
-    app.wd.find_element_by_xpath("//*[@title='Konrad']").click()
+    app.create_new_topic(topic_title, topic_text="teścik")
+    app.wd.find_element_by_xpath("//*[@title=Marcin]").click()
     assert app.get_name_of_topic_title(topic_title) == topic_title
     app.topic_cleanup(topic_title)
