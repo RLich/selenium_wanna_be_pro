@@ -41,6 +41,7 @@ class Application:
 
     def logout(self):
         wd = self.wd
+        wd.find_element_by_id("logo")
         wd.find_element_by_id("username_logged_in").click()
         wd.find_element_by_xpath("//*[@title='Logout']").click()
 
@@ -165,6 +166,16 @@ class Application:
         wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
         wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "[value='Submit']")))
         wd.find_element_by_css_selector("[value='Submit']").click()
+
+    def assert_received_message(self, temat_wiadomosci):
+        wd = self.wd
+        wd.find_element_by_id("active-subsection").click()
+        elements = wd.find_elements_by_class_name("topictitle")
+        for element in elements:
+            if element.text == temat_wiadomosci:
+                return element.text
+
+
 
     def destroy(self):
         self.wd.quit()
