@@ -140,11 +140,25 @@ class Application:
 
     def enter_private_messages(self):
         wd = self.wd
-        elements = wd.find_elements_by_class_name("rightside")
+        elements = wd.find_elements_by_css_selector("[role='menuitem']")
         for element in elements:
             if element.text == "Private messages":
                 element.click()
                 break
+
+    def send_private_message(self, temat_wiadomosci, tresc_wiadomosci):
+        wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR("[title='Compose message']"))))
+        wd.find_element_by_css_selector("[title='Compose message']").click()
+        wd.find_element_by_id("username_list").clear()
+        wd.find_element_by_id("username_list").send_keys("Config.username2")
+        wd.find_element_by_name("add_to").click()
+        wd.find_element_by_id("subject").clear()
+        wd.find_element_by_id("subject").send_keys(temat_wiadomosci)
+        wd.find_element_by_id("message").clear()
+        wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
+        wd.find_element_by_css_selector("[value='Submit']").click()
 
     def destroy(self):
         self.wd.quit()
