@@ -137,5 +137,14 @@ class Application:
         wd.find_element_by_name("delete_permanent").click()
         wd.find_element_by_name("confirm").click()
 
+
+    def enter_private_messages(self):
+        wd = self.wd
+        elements = wd.find_elements_by_class_name("rightside")
+        for element in elements:
+            if element.text == "Private messages":
+                element.click()
+                break
+
     def destroy(self):
         self.wd.quit()
