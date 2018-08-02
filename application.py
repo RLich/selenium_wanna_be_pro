@@ -142,7 +142,7 @@ class Application:
         wd = self.wd
         elements = wd.find_elements_by_css_selector("[role='menuitem']")
         for element in elements:
-            if element.text == "Private messages":
+            if element.text.__contains__("Private messages"):
                 element.click()
                 break
 
@@ -156,6 +156,7 @@ class Application:
         wd.find_element_by_id("username_list").send_keys(Config.username2)
         wait.until(expected_conditions.visibility_of_element_located((By.NAME, "add_to")))
         wd.find_element_by_name("add_to").click()
+        time.sleep(1)
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "subject")))
         wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(temat_wiadomosci)
