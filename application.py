@@ -149,15 +149,20 @@ class Application:
     def send_private_message(self, temat_wiadomosci, tresc_wiadomosci):
         wd = self.wd
         wait = WebDriverWait(wd, 10)
-        wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR("[title='Compose message']"))))
+        wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "[title='Compose message']")))
         wd.find_element_by_css_selector("[title='Compose message']").click()
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "username_list")))
         wd.find_element_by_id("username_list").clear()
-        wd.find_element_by_id("username_list").send_keys("Config.username2")
+        wd.find_element_by_id("username_list").send_keys(Config.username2)
+        wait.until(expected_conditions.visibility_of_element_located((By.NAME, "add_to")))
         wd.find_element_by_name("add_to").click()
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "subject")))
         wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(temat_wiadomosci)
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
         wd.find_element_by_id("message").clear()
         wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
+        wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "[value='Submit']")))
         wd.find_element_by_css_selector("[value='Submit']").click()
 
     def destroy(self):
