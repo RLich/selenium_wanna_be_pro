@@ -175,6 +175,16 @@ class Application:
             if element.text == temat_wiadomosci:
                 return element.text
 
+    def assert_sent_message(self, temat_wiadomosci):
+        wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "active-subsection")))
+        wd.find_element_by_id("active-subsection").click()
+        elements = wd.find_elements_by_class_name("topictitle")
+        for element in elements:
+            if element.text == temat_wiadomosci:
+                return element.text
+
 
 
     def destroy(self):

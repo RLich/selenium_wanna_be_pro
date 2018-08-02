@@ -16,6 +16,7 @@ def test_send_private_message(app):
     app.login(Config.username1, Config.password1)
     app.enter_private_messages()
     app.send_private_message(temat_wiadomosci, tresc_wiadomosci)
+    assert app.assert_sent_message(temat_wiadomosci) == temat_wiadomosci
     app.logout()
     app.login(Config.username2, Config.password2)
     app.enter_private_messages()
