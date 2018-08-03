@@ -175,16 +175,34 @@ class Application:
             if element.text == temat_wiadomosci:
                 return element.text
 
+    def enter_outbox(self):
+        wd = self.wd
+        elements = wd.find_elements_by_tag_name("span")
+        for element in elements:
+            if element.text == "Outbox":
+                element.click()
+                break
+
+    def enter_sent_messages(self):
+        wd = self.wd
+        elements = wd.find_elements_by_tag_name("span")
+        for element in elements:
+            if element.text == "Sent messages":
+                element.click()
+                break
+
     def assert_sent_message(self, temat_wiadomosci):
         wd = self.wd
         wait = WebDriverWait(wd, 10)
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "active-subsection")))
-        wd.find_element_by_id("active-subsection").click()
         elements = wd.find_elements_by_class_name("topictitle")
         for element in elements:
             if element.text == temat_wiadomosci:
                 return element.text
 
+    def assert_if_user_in_private_messeges(self):
+        wd = self.wd
+        return wd.find_element_by_css_selector("[title='Compose message']").text
 
 
     def destroy(self):

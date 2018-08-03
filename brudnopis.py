@@ -10,11 +10,13 @@ def app(request):
     request.addfinalizer(fixture.destroy)
     return fixture
 
-def test_add_topic(app):
-    name = "Marcin"
-    reply = "test reply"
+def test_send_private_message(app):
+    temat_wiadomosci = "testowy temat"
+    tresc_wiadomosci = "testowa wiadomość"
     app.login(Config.username1, Config.password1)
-    app.enter_subforum_by_name(name)
-    app.wd.find_element_by_class_name("topictitle").click()
-    assert app.get_post_content(reply) == reply
-    app.post_and_topic_cleanup()
+    assert app.get_username_from_nav_bar() == Config.username1
+    app.enter_private_messages()
+    app.enter_outbox()
+    time.sleep(1)
+    app.enter_sent_messages()
+    time.sleep(3)
