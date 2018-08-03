@@ -164,6 +164,7 @@ class Application:
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
         wd.find_element_by_id("message").clear()
         wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
+        time.sleep(1)
         wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "[value='Submit']")))
         wd.find_element_by_css_selector("[value='Submit']").click()
 
@@ -188,7 +189,7 @@ class Application:
     def enter_outbox_from_newly_sent_message(self):
         wd = self.wd
         wait = WebDriverWait(wd, 10)
-        wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "active-subsection")))
+        wait.until(expected_conditions.visibility_of_element_located((By.ID, "active-subsection")))
         wd.find_element_by_class_name("active-subsection").click()
 
 
@@ -218,8 +219,12 @@ class Application:
     def assert_if_user_redirected_to_sent_message(self):
         wd = self.wd
         wait = WebDriverWait(wd, 10)
-        wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "h2")))
-        return wd.find_element_by_tag_name("h2").text
+        wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "arrow-left")))
+        return wd.find_element_by_class_name("arrow-left").text
+
+    def assert_if_information_window_present(self):
+        wd = self.wd
+        return wd.find_element_by_class_name("message-title").text
 
 
     def destroy(self):

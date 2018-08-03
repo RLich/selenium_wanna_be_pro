@@ -18,13 +18,18 @@ def test_send_private_message(app):
     app.enter_private_messages()
     assert app.assert_if_user_in_private_messeges() == "New PM"
     app.send_private_message(temat_wiadomosci, tresc_wiadomosci)
-    assert app.wd.find_element_by_class_name("message-title").text == "Information"
-    assert app.assert_if_user_in_private_messeges() == "View messages: Outbox"
+    assert app.assert_if_information_window_present() == "Information"
+    assert app.assert_if_user_redirected_to_sent_message() == 'Return to “Outbox”'
     app.enter_outbox_from_newly_sent_message()
     assert app.assert_sent_message(temat_wiadomosci) == temat_wiadomosci
     app.logout()
     app.login(Config.username2, Config.password2)
     assert app.get_username_from_nav_bar() == Config.username2
     app.enter_private_messages()
-    time.sleep(3)
     assert app.assert_received_message(temat_wiadomosci) == temat_wiadomosci
+    app.logout()
+    app.login(Config.username1, Config.password1)
+    app.enter_private_messages()
+    app.enter_sent_messages()
+    assert app.assert_sent_message(temat_wiadomosci) == temat_wiadomosci
+
