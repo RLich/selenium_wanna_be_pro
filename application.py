@@ -177,14 +177,25 @@ class Application:
 
     def enter_outbox(self):
         wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
         elements = wd.find_elements_by_tag_name("span")
         for element in elements:
             if element.text == "Outbox":
                 element.click()
                 break
 
+    def enter_outbox_from_newly_sent_message(self):
+        wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "active-subsection")))
+        wd.find_element_by_class_name("active-subsection").click()
+
+
     def enter_sent_messages(self):
         wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
         elements = wd.find_elements_by_tag_name("span")
         for element in elements:
             if element.text == "Sent messages":
@@ -203,6 +214,12 @@ class Application:
     def assert_if_user_in_private_messeges(self):
         wd = self.wd
         return wd.find_element_by_css_selector("[title='Compose message']").text
+
+    def assert_if_user_redirected_to_sent_message(self):
+        wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "h2")))
+        return wd.find_element_by_tag_name("h2").text
 
 
     def destroy(self):
