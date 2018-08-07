@@ -10,8 +10,8 @@ def app(request):
     return fixture
 
 def test_send_private_message(app):
-    temat_wiadomosci = "testowy temat"
-    tresc_wiadomosci = "testowa wiadomość"
+    temat_wiadomosci = app.random_string(10)
+    tresc_wiadomosci = app.random_string(30)
     app.login(Config.username1, Config.password1)
     assert app.get_username_from_nav_bar() == Config.username1
     app.enter_private_messages()
