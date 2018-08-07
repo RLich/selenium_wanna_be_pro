@@ -117,10 +117,13 @@ class Application:
         wd = self.wd
         wait = WebDriverWait(wd, 10)
         wd.find_element_by_xpath("//*[@title='Post a reply']").click()
+        time.sleep(1)
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
         wd.find_element_by_id("message").clear()
         wd.find_element_by_id("message").send_keys(reply)
+        time.sleep(1)
         wait.until(expected_conditions.visibility_of_element_located((By.NAME, "post")))
+        time.sleep(1)
         wd.find_element_by_name("post").click()
 
     def get_post_content(self, reply):
@@ -228,7 +231,8 @@ class Application:
         wd = self.wd
         return wd.find_element_by_class_name("message-title").text
 
-    def random_string(self,prefix, max_len):
+    def random_string(self, max_len):
+        prefix = "test "
         symbols = string.ascii_letters + string.digits + " " + string.punctuation
         return prefix + "".join([random.choice(symbols) for i in range(random.randrange(max_len))])
 

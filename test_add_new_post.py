@@ -11,9 +11,9 @@ def app(request):
     return fixture
 
 def test_add_new_post(app):
-    topic_title = "new topic test 2"
+    topic_title = app.random_string(10)
     name = "Marcin"
-    reply = "test reply"
+    reply = app.random_string(20)
     app.login(Config.username1, Config.password1)
     app.enter_subforum_by_name(name)
     app.create_new_topic(topic_title, topic_text = "kolejny tescik")
