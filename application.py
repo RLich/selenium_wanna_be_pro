@@ -2,6 +2,8 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
+import string
+import random
 
 from Config.cfg_att import Config
 import time
@@ -225,6 +227,12 @@ class Application:
     def assert_if_information_window_present(self):
         wd = self.wd
         return wd.find_element_by_class_name("message-title").text
+
+    def random_string(self,prefix, max_len):
+        symbols = string.ascii_letters + string.digits + " " + string.punctuation
+        return prefix + "".join([random.choice(symbols) for i in range(random.randrange(max_len))])
+
+
 
 
     def destroy(self):
