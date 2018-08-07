@@ -1,6 +1,6 @@
 from application import Application
 import pytest
-
+# jest okejka!
 @pytest.fixture
 def app(request):
     fixture = Application()

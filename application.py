@@ -12,7 +12,7 @@ import time
 class Application:
     def __init__(self):
         self.wd = WebDriver()
-        self.wd.implicitly_wait(60)
+        self.wd.implicitly_wait(1)
 
     def open_home_page(self):
         wd = self.wd
@@ -23,8 +23,9 @@ class Application:
         self.open_home_page()
 
         # wpisywanie użytkownika
-        wd.find_element_by_name("username").click()
-        wd.find_element_by_name("username").send_keys(username)
+        usernameBox = wd.find_element_by_name("username")
+        usernameBox.click()
+        usernameBox.send_keys(username)
 
         # wpisywanie hasła
         wd.find_element_by_name("password").click()
@@ -37,13 +38,12 @@ class Application:
         wd = self.wd
         return wd.find_element_by_id("username_logged_in").text
 
-    def get_login_from_nav_bar(self):
+    def check_is_login_available(self):
         wd = self.wd
-        return wd.find_element_by_xpath("//*[@title='Login']").text
+        return wd.find_element_by_xpath("//*[@title='Login']").text == "Login"
 
     def logout(self):
         wd = self.wd
-        wd.find_element_by_id("logo")
         wd.find_element_by_id("username_logged_in").click()
         wd.find_element_by_xpath("//*[@title='Logout']").click()
 
@@ -61,23 +61,21 @@ class Application:
 
     def enter_subforum_by_name(self, name):
         wd = self.wd
-        elements = wd.find_elements_by_class_name('forumtitle')
-        for user in elements:
-            if user.text == name:
-                user.click()
+        subforums = wd.find_elements_by_class_name('forumtitle')
+        for subforum in subforums:
+            if subforum.text == name:
+                subforum.click()
                 break
 
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
-        wd.find_element_by_xpath("//*[@title='Post a new topic']").click()
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "subject")))
+        wait = self.waiter(wd)
+        wd.find_element_by_xpath("//a[@class='button']").click()
         wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(topic_title)
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
         wd.find_element_by_id("message").clear()
         wd.find_element_by_id("message").send_keys(topic_text)
-        wait.until(expected_conditions.visibility_of_element_located((By.NAME, "post")))
+        time.sleep(1)
         wd.find_element_by_name("post").click()
 
     def enter_last_subject(self, topic_title):
@@ -88,13 +86,14 @@ class Application:
                 topics.click()
                 break
 
-    def get_name_of_topic_title(self, topic_title):
+    def check_title_in_topic_titles(self, topic_title):
         wd = self.wd
-        wd.find_element_by_xpath("//*[@title='Marcin']").click()
-        elements = wd.find_elements_by_class_name("topictitle")
-        for topic in elements:
-            if topic.text == topic_title:
-                return topic.text
+        topic_titles = wd.find_elements_by_class_name("topictitle")
+        for title in topic_titles:
+            if title.text == topic_title:
+                return True
+        return False
+
 
     def topic_cleanup(self, topic_title):
         wd = self.wd
@@ -115,7 +114,7 @@ class Application:
 
     def post_a_reply(self, reply):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
+        wait = self.waiter(wd)
         wd.find_element_by_xpath("//*[@title='Post a reply']").click()
         time.sleep(1)
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
@@ -148,34 +147,42 @@ class Application:
         wd = self.wd
         elements = wd.find_elements_by_css_selector("[role='menuitem']")
         for element in elements:
-            if element.text.__contains__("Private messages"):
+            if "Private messages" in element.text:
                 element.click()
                 break
 
     def send_private_message(self, temat_wiadomosci, tresc_wiadomosci):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
+        wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "[title='Compose message']")))
-        wd.find_element_by_css_selector("[title='Compose message']").click()
+        wd.find_element_by_css_selector("[title='Compose message']").click() ### sadsad
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "username_list")))
         wd.find_element_by_id("username_list").clear()
         wd.find_element_by_id("username_list").send_keys(Config.username2)
-        wait.until(expected_conditions.visibility_of_element_located((By.NAME, "add_to")))
+        # wait.until(expected_conditions.visibility_of_element_located((By.NAME, "add_to")))
+
         wd.find_element_by_name("add_to").click()
-        time.sleep(1)
+
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "subject")))
         wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(temat_wiadomosci)
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
         wd.find_element_by_id("message").clear()
+
         wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
-        time.sleep(1)
-        wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "[value='Submit']")))
-        wd.find_element_by_css_selector("[value='Submit']").click()
+        # time.sleep(100)
+        wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, ".default-submit-action")))
+        # wd.find_element_by_id("postform").submit()
+        wd.find_element_by_css_selector(".default-submit-action").click()
+        wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, 'message-title')))
+
+    def waiter(self, wd):
+        wait = WebDriverWait(wd, 10)
+        return wait
 
     def assert_received_message(self, temat_wiadomosci):
         wd = self.wd
-        wd.find_element_by_id("active-subsection").click()
+        # wd.find_element_by_id("active-subsection").click()
         elements = wd.find_elements_by_class_name("topictitle")
         for element in elements:
             if element.text == temat_wiadomosci:
@@ -183,7 +190,7 @@ class Application:
 
     def enter_outbox(self):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
+        wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
         elements = wd.find_elements_by_tag_name("span")
         for element in elements:
@@ -193,24 +200,30 @@ class Application:
 
     def enter_outbox_from_newly_sent_message(self):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
+        wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "active-subsection")))
         wd.find_element_by_class_name("active-subsection").click()
 
 
     def enter_sent_messages(self):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
+        wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
         elements = wd.find_elements_by_tag_name("span")
         for element in elements:
             if element.text == "Sent messages":
                 element.click()
                 break
+# kutang nazewnictwa -> medal cebulandii
+
+    def check_subforum_name(self, name_of_subforum):
+        wd = self.wd
+        return wd.find_element_by_class_name('forum-title').text == name_of_subforum
+
 
     def assert_sent_message(self, temat_wiadomosci):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
+        wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.ID, "active-subsection")))
         elements = wd.find_elements_by_class_name("topictitle")
         for element in elements:
@@ -223,7 +236,7 @@ class Application:
 
     def assert_if_user_redirected_to_sent_message(self):
         wd = self.wd
-        wait = WebDriverWait(wd, 10)
+        wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "arrow-left")))
         return wd.find_element_by_class_name("arrow-left").text
 

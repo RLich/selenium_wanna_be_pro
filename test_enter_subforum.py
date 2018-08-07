@@ -1,7 +1,7 @@
 import pytest
 from application import Application
 from Config.cfg_att import Config
-
+# nie ma okejki, poprawiaj!
 
 @pytest.fixture
 def app(request):
@@ -10,6 +10,7 @@ def app(request):
     return fixture
 
 def test_enter_subforum_by_name(app):
+    name_of_subforum = "Marcin"
     app.login(Config.username1, Config.password1)
-    app.enter_subforum_by_name("Marcin")
-    assert app.wd.find_element_by_class_name('forum-title').text == 'Marcin'
+    app.enter_subforum_by_name(name_of_subforum)
+    assert app.check_subforum_name(name_of_subforum)

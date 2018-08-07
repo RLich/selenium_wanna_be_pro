@@ -2,7 +2,7 @@ import pytest
 from application import Application
 from Config.cfg_att import Config
 
-
+# zapracuj na okejkę
 @pytest.fixture
 def app(request):
     fixture = Application()
@@ -15,12 +15,15 @@ def test_send_private_message(app):
     app.login(Config.username1, Config.password1)
     assert app.get_username_from_nav_bar() == Config.username1
     app.enter_private_messages()
-    assert app.assert_if_user_in_private_messeges() == "New PM"
-    app.send_private_message(temat_wiadomosci, tresc_wiadomosci)
-    assert app.assert_if_information_window_present() == "Information"
+    assert app.assert_if_user_in_private_messeges() == "New PM"  # wielki kurewski myślnik: -------
+    message = app.send_private_message(temat_wiadomosci, tresc_wiadomosci)
+    # assert app.assert_if_information_window_present() == "Information"
     assert app.assert_if_user_redirected_to_sent_message() == 'Return to “Outbox”'
     app.enter_outbox_from_newly_sent_message()
     assert app.assert_sent_message(temat_wiadomosci) == temat_wiadomosci
+    """
+    wiecej niz jeden taki temat wiadomosci -> sprawdz ile jest takich tematow przed i po
+    """
     app.logout()
     app.login(Config.username2, Config.password2)
     assert app.get_username_from_nav_bar() == Config.username2
