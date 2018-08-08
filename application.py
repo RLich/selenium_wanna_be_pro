@@ -161,8 +161,7 @@ class Application:
         wd.find_element_by_id("subject").send_keys(temat_wiadomosci)
         wd.find_element_by_id("message").clear()
         wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
-        time.sleep(1)
-        # wd.find_element_by_id("postform").submit()
+        time.sleep(2)
         wd.find_element_by_css_selector(".default-submit-action").click()
         wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, 'message-title')))
 
@@ -170,13 +169,13 @@ class Application:
         wait = WebDriverWait(wd, 10)
         return wait
 
-    def assert_received_message(self, temat_wiadomosci):
+    def check_received_message(self, temat_wiadomosci):
         wd = self.wd
-        # wd.find_element_by_id("active-subsection").click()
-        elements = wd.find_elements_by_class_name("topictitle")
-        for element in elements:
-            if element.text == temat_wiadomosci:
-                return element.text
+        topics = wd.find_elements_by_class_name("topictitle")
+        for topic in topics:
+            if topic.text == temat_wiadomosci:
+                return True
+        return False
 
     def enter_outbox(self):
         wd = self.wd
@@ -191,8 +190,8 @@ class Application:
     def enter_outbox_from_newly_sent_message(self):
         wd = self.wd
         wait = self.waiter(wd)
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "active-subsection")))
-        wd.find_element_by_class_name("active-subsection").click()
+        wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "arrow-left")))
+        wd.find_element_by_class_name("arrow-left").click()
 
 
     def enter_sent_messages(self):
@@ -210,28 +209,27 @@ class Application:
         return wd.find_element_by_class_name('forum-title').text == name_of_subforum
 
 
-    def assert_sent_message(self, temat_wiadomosci):
+    def get_sent_message_title(self, temat_wiadomosci):
         wd = self.wd
-        wait = self.waiter(wd)
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "active-subsection")))
-        elements = wd.find_elements_by_class_name("topictitle")
-        for element in elements:
-            if element.text == temat_wiadomosci:
-                return element.text
+        topics = wd.find_elements_by_class_name("topictitle")
+        for topic in topics:
+            if topic.text == temat_wiadomosci:
+                return True
+        return False
 
     def assert_if_user_in_private_messeges(self):
         wd = self.wd
-        return wd.find_element_by_css_selector("[title='Compose message']").text
+        return wd.find_element_by_css_selector("li.activetab").text == "Private messages"
 
-    def assert_if_user_redirected_to_sent_message(self):
+    def assert_if_user_redirected_to_message_in_outbox(self):
         wd = self.wd
         wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "arrow-left")))
-        return wd.find_element_by_class_name("arrow-left").text
+        return wd.find_element_by_class_name("arrow-left").text == 'Return to “Outbox”'
 
-    def assert_if_information_window_present(self):
+    def get_message_confirmation_window_title(self):
         wd = self.wd
-        return wd.find_element_by_class_name("message-title").text
+        return wd.find_element_by_class_name("message-title").text == "Information"
 
     def random_string(self, max_len):
         symbols = string.ascii_letters + string.digits + " " + string.punctuation
