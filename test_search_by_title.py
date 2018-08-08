@@ -10,6 +10,11 @@ def app(request):
     return fixture
 
 def test_earch_by_title(app):
+    topic_title = "Unikalny temat dla testu wyszukiwarki"
+    topic_text = app.random_string(30)
+    subforum_name = "Rafał"
     app.login(Config.username1, Config.password1)
-    app.search_by_title()
-    assert app.wd.find_element_by_css_selector(".posthilit").text == "test"
+    app.enter_subforum_by_name(subforum_name)
+    app.create_new_topic(topic_title, topic_text)
+    app.search_by_title(topic_title)
+    assert app.check_highlighted_topic_title()

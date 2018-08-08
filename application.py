@@ -69,7 +69,6 @@ class Application:
 
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
-        wait = self.waiter(wd)
         wd.find_element_by_xpath("//a[@class='button']").click()
         wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(topic_title)
@@ -106,10 +105,10 @@ class Application:
         wd.find_element_by_name("delete_permanent").click()
         wd.find_element_by_name("confirm").click()
 
-    def search_by_title(self):
+    def search_by_title(self, topic_title):
         wd = self.wd
         wd.find_element_by_id("keywords").clear()
-        wd.find_element_by_id("keywords").send_keys("test")
+        wd.find_element_by_id("keywords").send_keys(topic_title)
         wd.find_element_by_xpath("//*[@title='Search']").click()
 
     def post_a_reply(self, reply):
@@ -154,24 +153,15 @@ class Application:
     def send_private_message(self, temat_wiadomosci, tresc_wiadomosci):
         wd = self.wd
         wait = self.waiter(wd)
-        wait.until(expected_conditions.visibility_of_element_located((By.CSS_SELECTOR, "[title='Compose message']")))
         wd.find_element_by_css_selector("[title='Compose message']").click() ### sadsad
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "username_list")))
         wd.find_element_by_id("username_list").clear()
         wd.find_element_by_id("username_list").send_keys(Config.username2)
-        # wait.until(expected_conditions.visibility_of_element_located((By.NAME, "add_to")))
-
         wd.find_element_by_name("add_to").click()
-
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "subject")))
         wd.find_element_by_id("subject").clear()
         wd.find_element_by_id("subject").send_keys(temat_wiadomosci)
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
         wd.find_element_by_id("message").clear()
-
         wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
-        # time.sleep(100)
-        wait.until(expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, ".default-submit-action")))
+        time.sleep(1)
         # wd.find_element_by_id("postform").submit()
         wd.find_element_by_css_selector(".default-submit-action").click()
         wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, 'message-title')))
@@ -209,12 +199,11 @@ class Application:
         wd = self.wd
         wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
-        elements = wd.find_elements_by_tag_name("span")
-        for element in elements:
-            if element.text == "Sent messages":
-                element.click()
+        mail_tabs = wd.find_elements_by_tag_name("span")
+        for mail_tab in mail_tabs:
+            if mail_tab.text == "Sent messages":
+                mail_tab.click()
                 break
-# kutang nazewnictwa -> medal cebulandii
 
     def check_subforum_name(self, name_of_subforum):
         wd = self.wd
@@ -245,10 +234,12 @@ class Application:
         return wd.find_element_by_class_name("message-title").text
 
     def random_string(self, max_len):
-        prefix = "test "
         symbols = string.ascii_letters + string.digits + " " + string.punctuation
-        return prefix + "".join([random.choice(symbols) for i in range(random.randrange(max_len))])
+        return "".join([random.choice(symbols) for i in range(random.randrange(max_len))])
 
+    def check_highlighted_topic_title(self):
+        wd = self.wd
+        return wd.find_element_by_css_selector(".posthilit").text == "Unikalny"
 
 
 
