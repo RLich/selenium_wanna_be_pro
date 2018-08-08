@@ -22,16 +22,14 @@ class Application:
         wd = self.wd
         self.open_home_page()
 
-        # wpisywanie użytkownika
         usernameBox = wd.find_element_by_name("username")
         usernameBox.click()
         usernameBox.send_keys(username)
 
-        # wpisywanie hasła
-        wd.find_element_by_name("password").click()
-        wd.find_element_by_name("password").send_keys(password)
+        passwordBox = wd.find_element_by_name("password")
+        passwordBox.click()
+        passwordBox.send_keys(password)
 
-        # zatwierdzenie logowania
         wd.find_element_by_name("login").click()
 
     def get_username_from_nav_bar(self):
@@ -70,19 +68,23 @@ class Application:
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
         wd.find_element_by_xpath("//a[@class='button']").click()
-        wd.find_element_by_id("subject").clear()
-        wd.find_element_by_id("subject").send_keys(topic_title)
-        wd.find_element_by_id("message").clear()
-        wd.find_element_by_id("message").send_keys(topic_text)
+        subjectBox = wd.find_element_by_id("subject")
+        subjectBox.clear()
+        subjectBox.send_keys(topic_title)
+
+        messageBox = wd.find_element_by_id("message")
+        messageBox.clear()
+        messageBox.send_keys(topic_text)
+
         time.sleep(1)
         wd.find_element_by_name("post").click()
 
     def enter_last_subject(self, topic_title):
         wd = self.wd
-        elements = wd.find_element_by_class_name("lastsubject")
-        for topics in elements:
-            if topics.text == topic_title:
-                topics.click()
+        last_subjects = wd.find_element_by_class_name("lastsubject")
+        for last_subject in last_subjects:
+            if last_subject.text == topic_title:
+                last_subject.click()
                 break
 
     def check_title_in_topic_titles(self, topic_title):
@@ -92,7 +94,6 @@ class Application:
             if title.text == topic_title:
                 return True
         return False
-
 
     def topic_cleanup(self, topic_title):
         wd = self.wd
@@ -107,21 +108,20 @@ class Application:
 
     def search_by_title(self, topic_title):
         wd = self.wd
-        wd.find_element_by_id("keywords").clear()
-        wd.find_element_by_id("keywords").send_keys(topic_title)
+        searchBox = wd.find_element_by_id("keywords")
+        searchBox.clear()
+        searchBox.send_keys(topic_title)
         wd.find_element_by_xpath("//*[@title='Search']").click()
 
     def post_a_reply(self, reply):
         wd = self.wd
-        wait = self.waiter(wd)
         wd.find_element_by_xpath("//*[@title='Post a reply']").click()
-        time.sleep(1)
-        wait.until(expected_conditions.visibility_of_element_located((By.ID, "message")))
-        wd.find_element_by_id("message").clear()
-        wd.find_element_by_id("message").send_keys(reply)
-        time.sleep(1)
-        wait.until(expected_conditions.visibility_of_element_located((By.NAME, "post")))
-        time.sleep(1)
+
+        messageBox = wd.find_element_by_id("message")
+        messageBox.clear()
+        messageBox.send_keys(reply)
+
+        time.sleep(2)
         wd.find_element_by_name("post").click()
 
     def get_post_content(self, reply):
@@ -141,7 +141,6 @@ class Application:
         wd.find_element_by_name("delete_permanent").click()
         wd.find_element_by_name("confirm").click()
 
-
     def enter_private_messages(self):
         wd = self.wd
         elements = wd.find_elements_by_css_selector("[role='menuitem']")
@@ -153,14 +152,21 @@ class Application:
     def send_private_message(self, temat_wiadomosci, tresc_wiadomosci):
         wd = self.wd
         wait = self.waiter(wd)
-        wd.find_element_by_css_selector("[title='Compose message']").click() ### sadsad
-        wd.find_element_by_id("username_list").clear()
-        wd.find_element_by_id("username_list").send_keys(Config.username2)
+        wd.find_element_by_css_selector("[accesskey='n']").click()
+
+        usernameBox = wd.find_element_by_id("username_list")
+        usernameBox.clear()
+        usernameBox.send_keys(Config.username2)
         wd.find_element_by_name("add_to").click()
-        wd.find_element_by_id("subject").clear()
-        wd.find_element_by_id("subject").send_keys(temat_wiadomosci)
-        wd.find_element_by_id("message").clear()
-        wd.find_element_by_id("message").send_keys(tresc_wiadomosci)
+
+        subjectBox = wd.find_element_by_id("subject")
+        subjectBox.clear()
+        subjectBox.send_keys(temat_wiadomosci)
+
+        messageBox = wd.find_element_by_id("message")
+        messageBox.clear()
+        messageBox.send_keys(tresc_wiadomosci)
+
         time.sleep(2)
         wd.find_element_by_css_selector(".default-submit-action").click()
         wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, 'message-title')))
@@ -181,10 +187,10 @@ class Application:
         wd = self.wd
         wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
-        elements = wd.find_elements_by_tag_name("span")
-        for element in elements:
-            if element.text == "Outbox":
-                element.click()
+        priv_messages_tabs = wd.find_elements_by_tag_name("span")
+        for priv_messages_tab in priv_messages_tabs:
+            if priv_messages_tab.text == "Outbox":
+                priv_messages_tab.click()
                 break
 
     def enter_outbox_from_newly_sent_message(self):
@@ -192,7 +198,6 @@ class Application:
         wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "arrow-left")))
         wd.find_element_by_class_name("arrow-left").click()
-
 
     def enter_sent_messages(self):
         wd = self.wd
@@ -207,7 +212,6 @@ class Application:
     def check_subforum_name(self, name_of_subforum):
         wd = self.wd
         return wd.find_element_by_class_name('forum-title').text == name_of_subforum
-
 
     def get_sent_message_title(self, temat_wiadomosci):
         wd = self.wd
@@ -238,8 +242,6 @@ class Application:
     def check_highlighted_topic_title(self):
         wd = self.wd
         return wd.find_element_by_css_selector(".posthilit").text == "Unikalny"
-
-
 
     def destroy(self):
         self.wd.quit()

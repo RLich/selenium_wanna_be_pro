@@ -34,4 +34,3 @@ def test_send_private_message(app):
     app.enter_private_messages()
     app.enter_sent_messages()
     assert app.get_sent_message_title(temat_wiadomosci)
-
