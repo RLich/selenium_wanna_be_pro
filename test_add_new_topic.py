@@ -1,13 +1,17 @@
 import pytest
 from application import Application
 from Config.cfg_att import Config
-# nie ma okejki, ale blisko!
+
+
+# jest spoko, masz okejke
+
 
 @pytest.fixture
 def app(request):
     fixture = Application()
     request.addfinalizer(fixture.destroy)
     return fixture
+
 
 def test_add_topic(app):
     topic_title = app.random_string(10)

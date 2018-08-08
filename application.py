@@ -68,11 +68,11 @@ class Application:
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
         wd.find_element_by_xpath("//a[@class='button']").click()
-        subjectBox = wd.find_element_by_id("subject")
+        subjectBox = wd.find_element_by_id("subject")  # trzymaj się nazewnictwa xxx_yyy
         subjectBox.clear()
         subjectBox.send_keys(topic_title)
 
-        messageBox = wd.find_element_by_id("message")
+        messageBox = wd.find_element_by_id("message")  # jak wyzej
         messageBox.clear()
         messageBox.send_keys(topic_text)
 

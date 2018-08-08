@@ -1,13 +1,15 @@
 import pytest
 from application import Application
 from Config.cfg_att import Config
-
 # zapracuj na okejkę
+
+
 @pytest.fixture
 def app(request):
     fixture = Application()
     request.addfinalizer(fixture.destroy)
     return fixture
+
 
 def test_send_private_message(app):
     temat_wiadomosci = app.random_string(10)
