@@ -1,6 +1,7 @@
 import pytest
 from application import Application
 from Config.cfg_att import Config
+import time
 
 # zapracuj na okejkę
 @pytest.fixture
@@ -20,7 +21,8 @@ def test_send_private_message(app):
     assert app.check_if_user_has_opened_newly_sent_message_in_outbox() ## ewentualnie check_if_user_in_newly_sent_message_in_outbox() ale dublowanie "in"
     app.enter_private_messages()
     app.enter_outbox()
-    assert app.get_sent_message_title(temat_wiadomosci)
+    time.sleep(3)
+    assert app.check_message_title(temat_wiadomosci)
     """
     wiecej niz jeden taki temat wiadomosci -> sprawdz ile jest takich tematow przed i po ---> to be implemented later
     """
@@ -28,9 +30,9 @@ def test_send_private_message(app):
     app.login(Config.username2, Config.password2)
     assert app.get_username_from_nav_bar() == Config.username2
     app.enter_private_messages()
-    assert app.check_received_message(temat_wiadomosci)
+    assert app.check_message_title(temat_wiadomosci)
     app.logout()
     app.login(Config.username1, Config.password1)
     app.enter_private_messages()
     app.enter_sent_messages()
-    assert app.get_sent_message_title(temat_wiadomosci)
+    assert app.check_message_title(temat_wiadomosci)

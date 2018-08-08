@@ -174,7 +174,7 @@ class Application:
         wait = WebDriverWait(wd, 10)
         return wait
 
-    def check_received_message(self, temat_wiadomosci):
+    def check_message_title(self, temat_wiadomosci):
         wd = self.wd
         topics = wd.find_elements_by_class_name("topictitle")
         for topic in topics:
@@ -188,7 +188,7 @@ class Application:
         wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
         priv_messages_tabs = wd.find_elements_by_tag_name("span")
         for priv_messages_tab in priv_messages_tabs:
-            if priv_messages_tab.text == "Outbox":
+            if "Outbox" in priv_messages_tab.text:
                 priv_messages_tab.click()
                 break
 
@@ -211,14 +211,6 @@ class Application:
     def check_subforum_name(self, name_of_subforum):
         wd = self.wd
         return wd.find_element_by_class_name('forum-title').text == name_of_subforum
-
-    def get_sent_message_title(self, temat_wiadomosci):
-        wd = self.wd
-        topics = wd.find_elements_by_class_name("topictitle")
-        for topic in topics:
-            if topic.text == temat_wiadomosci:
-                return True
-        return False
 
     def assert_if_user_in_private_messeges(self):
         wd = self.wd
