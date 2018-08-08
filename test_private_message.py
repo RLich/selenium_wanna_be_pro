@@ -17,9 +17,9 @@ def test_send_private_message(app):
     app.enter_private_messages()
     assert app.assert_if_user_in_private_messeges()
     app.send_private_message(temat_wiadomosci, tresc_wiadomosci)
-    assert app.get_message_confirmation_window_title()
-    assert app.assert_if_user_redirected_to_message_in_outbox()
-    app.enter_outbox_from_newly_sent_message()
+    assert app.check_if_user_has_opened_newly_sent_message_in_outbox() ## ewentualnie check_if_user_in_newly_sent_message_in_outbox() ale dublowanie "in"
+    app.enter_private_messages()
+    app.enter_outbox()
     assert app.get_sent_message_title(temat_wiadomosci)
     """
     wiecej niz jeden taki temat wiadomosci -> sprawdz ile jest takich tematow przed i po ---> to be implemented later

@@ -22,13 +22,13 @@ class Application:
         wd = self.wd
         self.open_home_page()
 
-        usernameBox = wd.find_element_by_name("username")
-        usernameBox.click()
-        usernameBox.send_keys(username)
+        username_box = wd.find_element_by_name("username")
+        username_box.click()
+        username_box.send_keys(username)
 
-        passwordBox = wd.find_element_by_name("password")
-        passwordBox.click()
-        passwordBox.send_keys(password)
+        password_box = wd.find_element_by_name("password")
+        password_box.click()
+        password_box.send_keys(password)
 
         wd.find_element_by_name("login").click()
 
@@ -68,13 +68,13 @@ class Application:
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
         wd.find_element_by_xpath("//a[@class='button']").click()
-        subjectBox = wd.find_element_by_id("subject")
-        subjectBox.clear()
-        subjectBox.send_keys(topic_title)
+        subject_box = wd.find_element_by_id("subject")
+        subject_box.clear()
+        subject_box.send_keys(topic_title)
 
-        messageBox = wd.find_element_by_id("message")
-        messageBox.clear()
-        messageBox.send_keys(topic_text)
+        message_box = wd.find_element_by_id("message")
+        message_box.clear()
+        message_box.send_keys(topic_text)
 
         time.sleep(1)
         wd.find_element_by_name("post").click()
@@ -108,18 +108,18 @@ class Application:
 
     def search_by_title(self, topic_title):
         wd = self.wd
-        searchBox = wd.find_element_by_id("keywords")
-        searchBox.clear()
-        searchBox.send_keys(topic_title)
+        search_box = wd.find_element_by_id("keywords")
+        search_box.clear()
+        search_box.send_keys(topic_title)
         wd.find_element_by_xpath("//*[@title='Search']").click()
 
     def post_a_reply(self, reply):
         wd = self.wd
         wd.find_element_by_xpath("//*[@title='Post a reply']").click()
 
-        messageBox = wd.find_element_by_id("message")
-        messageBox.clear()
-        messageBox.send_keys(reply)
+        message_box = wd.find_element_by_id("message")
+        message_box.clear()
+        message_box.send_keys(reply)
 
         time.sleep(2)
         wd.find_element_by_name("post").click()
@@ -154,23 +154,22 @@ class Application:
         wait = self.waiter(wd)
         wd.find_element_by_css_selector("[accesskey='n']").click()
 
-        usernameBox = wd.find_element_by_id("username_list")
-        usernameBox.clear()
-        usernameBox.send_keys(Config.username2)
+        username_box = wd.find_element_by_id("username_list")
+        username_box.clear()
+        username_box.send_keys(Config.username2)
         wd.find_element_by_name("add_to").click()
 
-        subjectBox = wd.find_element_by_id("subject")
-        subjectBox.clear()
-        subjectBox.send_keys(temat_wiadomosci)
+        subject_box = wd.find_element_by_id("subject")
+        subject_box.clear()
+        subject_box.send_keys(temat_wiadomosci)
 
-        messageBox = wd.find_element_by_id("message")
-        messageBox.clear()
-        messageBox.send_keys(tresc_wiadomosci)
+        message_box = wd.find_element_by_id("message")
+        message_box.clear()
+        message_box.send_keys(tresc_wiadomosci)
 
         time.sleep(2)
         wd.find_element_by_css_selector(".default-submit-action").click()
-        wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, 'message-title')))
-
+        wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "message-title")))
     def waiter(self, wd):
         wait = WebDriverWait(wd, 10)
         return wait
@@ -225,7 +224,7 @@ class Application:
         wd = self.wd
         return wd.find_element_by_css_selector("li.activetab").text == "Private messages"
 
-    def assert_if_user_redirected_to_message_in_outbox(self):
+    def check_if_user_has_opened_newly_sent_message_in_outbox(self):
         wd = self.wd
         wait = self.waiter(wd)
         wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "arrow-left")))
