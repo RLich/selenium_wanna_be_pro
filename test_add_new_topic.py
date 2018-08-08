@@ -18,6 +18,4 @@ def test_add_topic(app):
     app.create_new_topic(topic_title, topic_text)
     app.open_home_page()
     app.enter_subforum_by_name(subforum_name)
-    # get_list_of_topic_titles().shouldContainIgnoringCase(topic_title)
-    # wez nazwe z tytułu tematu ( x ) czy jest równa tytłowi tematu ( x )
-    assert app.check_title_in_topic_titles(topic_title) == topic_title
+    assert app.check_title_in_topic_titles(topic_title) == True
