@@ -68,11 +68,11 @@ class Application:
     def create_new_topic(self, topic_title, topic_text):
         wd = self.wd
         wd.find_element_by_xpath("//a[@class='button']").click()
-        subjectBox = wd.find_element_by_id("subject")
+        subjectBox = wd.find_element_by_id("subject")  # trzymaj się nazewnictwa xxx_yyy
         subjectBox.clear()
         subjectBox.send_keys(topic_title)
 
-        messageBox = wd.find_element_by_id("message")
+        messageBox = wd.find_element_by_id("message")  # jak wyzej
         messageBox.clear()
         messageBox.send_keys(topic_text)
 
@@ -143,33 +143,30 @@ class Application:
 
     def enter_private_messages(self):
         wd = self.wd
-        elements = wd.find_elements_by_css_selector("[role='menuitem']")
-        for element in elements:
-            if "Private messages" in element.text:
-                element.click()
-                break
+        # DO ZMIANY, O! -> jest dobry element na to, podpowiadam: UL z id i w nim LI z klasa -> razem unikat
 
     def send_private_message(self, temat_wiadomosci, tresc_wiadomosci):
         wd = self.wd
         wait = self.waiter(wd)
         wd.find_element_by_css_selector("[accesskey='n']").click()
 
-        usernameBox = wd.find_element_by_id("username_list")
+        usernameBox = wd.find_element_by_id(
+            "username_list")  # nie uzywaj camelcase czasem a czasem nie, pyton preferuje z podłogami
         usernameBox.clear()
         usernameBox.send_keys(Config.username2)
         wd.find_element_by_name("add_to").click()
 
-        subjectBox = wd.find_element_by_id("subject")
+        subjectBox = wd.find_element_by_id("subject")  # jw
         subjectBox.clear()
         subjectBox.send_keys(temat_wiadomosci)
 
-        messageBox = wd.find_element_by_id("message")
+        messageBox = wd.find_element_by_id("message")  # jw
         messageBox.clear()
         messageBox.send_keys(tresc_wiadomosci)
 
-        time.sleep(2)
+        time.sleep(2)  # nie wiem co z tym zrobimy, chyba musi zostac badziewie
         wd.find_element_by_css_selector(".default-submit-action").click()
-        wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, 'message-title')))
+        # wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, 'message-title')))  - ten wait nie ma sensu jesli masz asercje po tej metodzie
 
     def waiter(self, wd):
         wait = WebDriverWait(wd, 10)
