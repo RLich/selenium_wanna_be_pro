@@ -1,7 +1,7 @@
 import pytest
 from application import Application
 from Config.cfg_att import Config
-# nie ma okejki -> popraw!
+# już jest okejka :)
 
 @pytest.fixture
 def app(request):
