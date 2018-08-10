@@ -214,15 +214,14 @@ class Application:
         wd = self.wd
         return wd.find_element_by_css_selector(".posthilit").text == "Unikalny"
 
-    def title_kutas(self, zielony_mustang):
+    def title_counter(self, temat_wiadomosci):
         wd = self.wd
         titles = wd.find_elements_by_class_name("topictitle")
-        tematy_o_konkretnej_nazwie = []
+        wanted_titles = []
         for title in titles:
-            if title.text == zielony_mustang:
-                tematy_o_konkretnej_nazwie.append(title)
-        return tematy_o_konkretnej_nazwie
-
+            if title.text == temat_wiadomosci:
+                wanted_titles.append(title)
+        return wanted_titles
 
     def destroy(self):
         self.wd.quit()
