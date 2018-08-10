@@ -13,4 +13,4 @@ def test_brudnopis(app):
     app.login(Config.username2, Config.password2)
     app.enter_private_messages()
     list = app.wd.find_elements_by_class_name("topictitle")
-    print(list.count(object))
+    print(list.count("topictitle"))
