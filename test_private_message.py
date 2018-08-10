@@ -1,7 +1,6 @@
 import pytest
 from application import Application
 from Config.cfg_att import Config
-import time
 
 # zapracuj na okejkę
 @pytest.fixture
