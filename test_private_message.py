@@ -1,6 +1,8 @@
 import pytest
-from application import Application
+
 from Config.cfg_att import Config
+from application import Application
+
 
 # zapracuj na okejkę
 @pytest.fixture
@@ -16,16 +18,16 @@ def test_send_private_message(app):
     app.enter_private_messages()
 
     chuju = app.title_kutas(kutang)  #  return lista
-"""
-
-chuju: List<String> = app.title_kutas(kutang)
-tresc: String = "xfafafafa"
-tresc_random: String = app.random(131)
-fun title_kusta(temat_wiad): List<String>{ciało  return List<String>}
-
-fun zaloguj(){.clicka()}
-
-"""
+    """
+    
+    chuju: List<String> = app.title_kutas(kutang)
+    tresc: String = "xfafafafa"
+    tresc_random: String = app.random(131)
+    fun title_kusta(temat_wiad): List<String>{ciało  return List<String>}
+    
+    fun zaloguj(){.clicka()}
+    
+    """
     app.logout()
     app.login(Config.username1, Config.password1)
     assert app.get_username_from_nav_bar() == Config.username1
