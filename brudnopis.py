@@ -1,6 +1,7 @@
 import pytest
-from application import Application
+
 from Config.cfg_att import Config
+from pages.application import Application
 
 
 @pytest.fixture
@@ -14,5 +15,3 @@ def test_glupoty(app):
     subforum_name = "Rafał"
     app.login(Config.username1, Config.password1)
     app.enter_subforum_by_name(subforum_name)
-    print(get_topics_before)
-    print(get_topics_after)

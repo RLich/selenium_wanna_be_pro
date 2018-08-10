@@ -1,36 +1,26 @@
+import random
+import string
+import time
+
 from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
-import string
-import random
 
 from Config.cfg_att import Config
-import time
+from pages.common import Common
 
 
 class Application:
     def __init__(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(1)
+        self.common = Common(self)
 
     def open_home_page(self):
         wd = self.wd
         wd.get(Config.main_url)
 
-    def login(self, username, password):
-        wd = self.wd
-        self.open_home_page()
-
-        username_box = wd.find_element_by_name("username")
-        username_box.click()
-        username_box.send_keys(username)
-
-        password_box = wd.find_element_by_name("password")
-        password_box.click()
-        password_box.send_keys(password)
-
-        wd.find_element_by_name("login").click()
 
     def get_username_from_nav_bar(self):
         wd = self.wd

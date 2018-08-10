@@ -1,7 +1,7 @@
 import pytest
 
 from Config.cfg_att import Config
-from application import Application
+from pages.application import Application
 
 
 # zapracuj na okejkę
@@ -16,8 +16,13 @@ def test_send_private_message(app):
     tresc_wiadomosci = app.random_string(30)
     app.login(Config.username2, Config.password2)
     app.enter_private_messages()
-
+    # app.priv_msg.go_to_sent_box
     chuju = app.title_kutas(kutang)  #  return lista
+
+    # fun setDateInFilterOfBirthDateInFiltersOnAgreements
+    # fun setDateInFilterOfStartDateOnAgreementsInFilters
+    # Agreements -> Filter : page.agreements.filter.setBirthDate
+
     """
     
     chuju: List<String> = app.title_kutas(kutang)

@@ -1,5 +1,8 @@
-from application import Application
 import pytest
+
+from pages.application import Application
+
+
 # jest okejka!
 @pytest.fixture
 def app(request):

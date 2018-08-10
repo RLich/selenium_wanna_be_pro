@@ -1,7 +1,9 @@
-import pytest
-from application import Application
-from Config.cfg_att import Config
 import time
+
+import pytest
+
+from Config.cfg_att import Config
+from pages.application import Application
 
 
 @pytest.fixture
