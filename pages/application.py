@@ -21,6 +21,19 @@ class Application:
         wd = self.wd
         wd.get(Config.main_url)
 
+    def login(self, username, password):
+        wd = self.wd
+        self.open_home_page()
+
+        username_box = wd.find_element_by_name("username")
+        username_box.click()
+        username_box.send_keys(username)
+
+        password_box = wd.find_element_by_name("password")
+        password_box.click()
+        password_box.send_keys(password)
+
+        wd.find_element_by_name("login").click()
 
     def get_username_from_nav_bar(self):
         wd = self.wd
@@ -176,8 +189,7 @@ class Application:
         wait = self.waiter(wd)
         xpath = "//a[@href='./ucp.php?i=pm&folder=%s']" % name_of_tab
         wait.until(expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
-        wd.find_elements_by_xpath(xpath).click()
-
+        wd.find_element_by_xpath(xpath).click()
 
     def enter_outbox_from_newly_sent_message(self):
         wd = self.wd
@@ -206,9 +218,9 @@ class Application:
         wd = self.wd
         return wd.find_element_by_class_name("message-title").text == "Information"
 
-    def random_string(self, max_len):
+    def random_string(self, min_len, max_len):
         symbols = string.ascii_letters + string.digits + " " + string.punctuation
-        return "".join([random.choice(symbols) for i in range(random.randrange(max_len))])
+        return "".join([random.choice(symbols) for i in range(random.randrange(min_len, max_len))])
 
     def check_highlighted_topic_title(self):
         wd = self.wd

@@ -12,7 +12,7 @@ def app(request):
 
 def test_earch_by_title(app):
     topic_title = "Unikalny temat dla testu wyszukiwarki"
-    topic_text = app.random_string(30)
+    topic_text = app.random_string(10, 30)
     subforum_name = "Rafał"
     app.login(Config.username1, Config.password1)
     app.enter_subforum_by_name(subforum_name)

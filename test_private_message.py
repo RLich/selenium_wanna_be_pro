@@ -12,8 +12,8 @@ def app(request):
     return fixture
 
 def test_send_private_message(app):
-    temat_wiadomosci = app.random_string(10)
-    tresc_wiadomosci = app.random_string(30)
+    temat_wiadomosci = app.random_string(5, 10)
+    tresc_wiadomosci = app.random_string(10, 30)
 
     app.login(Config.username2, Config.password2)
     app.enter_private_messages()
@@ -32,7 +32,7 @@ def test_send_private_message(app):
     app.login(Config.username2, Config.password2)
     assert app.get_username_from_nav_bar() == Config.username2
     app.enter_private_messages()
-    assert len(wanted_titles) == len(app.title_counter(temat_wiadomosci)) + 1
+    assert len(app.title_counter(temat_wiadomosci)) == len(wanted_titles) + 1
     app.logout()
 
     app.login(Config.username1, Config.password1)
