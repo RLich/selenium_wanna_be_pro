@@ -143,11 +143,7 @@ class Application:
 
     def enter_private_messages(self):
         wd = self.wd
-        elements = wd.find_elements_by_css_selector("[role='menuitem']")
-        for element in elements:
-            if "Private messages" in element.text:
-                element.click()
-                break
+        wd.find_element_by_id("nav-main").find_element_by_partial_link_text("Private messages").click()
 
     def send_private_message(self, temat_wiadomosci, tresc_wiadomosci):
         wd = self.wd
