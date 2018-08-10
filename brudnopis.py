@@ -9,9 +9,10 @@ def app(request):
     request.addfinalizer(fixture.destroy)
     return fixture
 
-def test_brudnopis(app):
-    app.login(Config.username2, Config.password2)
-    app.enter_private_messages()
-    titles = app.wd.find_elements_by_class_name("topictitle")
-    searched_titles = temat_wiadomosci
-    print(len(titles))
+
+def test_glupoty(app):
+    subforum_name = "Rafał"
+    app.login(Config.username1, Config.password1)
+    app.enter_subforum_by_name(subforum_name)
+    print(get_topics_before)
+    print(get_topics_after)

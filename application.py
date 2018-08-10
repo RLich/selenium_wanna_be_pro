@@ -179,14 +179,15 @@ class Application:
         return False
 
     def enter_outbox(self):
+        self.enter_priv_msg_tab("outbox")
+
+    def enter_priv_msg_tab(self, name_of_tab):
         wd = self.wd
         wait = self.waiter(wd)
-        wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
-        priv_messages_tabs = wd.find_elements_by_tag_name("span")
-        for priv_messages_tab in priv_messages_tabs:
-            if "Outbox" in priv_messages_tab.text:
-                priv_messages_tab.click()
-                break
+        xpath = "//a[@href='./ucp.php?i=pm&folder=%s']" % name_of_tab
+        wait.until(expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
+        wd.find_elements_by_xpath(xpath).click()
+
 
     def enter_outbox_from_newly_sent_message(self):
         wd = self.wd
@@ -195,14 +196,7 @@ class Application:
         wd.find_element_by_class_name("arrow-left").click()
 
     def enter_sent_messages(self):
-        wd = self.wd
-        wait = self.waiter(wd)
-        wait.until(expected_conditions.visibility_of_element_located((By.TAG_NAME, "span")))
-        mail_tabs = wd.find_elements_by_tag_name("span")
-        for mail_tab in mail_tabs:
-            if mail_tab.text == "Sent messages":
-                mail_tab.click()
-                break
+        self.enter_priv_msg_tab("sentbox")
 
     def check_subforum_name(self, name_of_subforum):
         wd = self.wd
@@ -230,23 +224,15 @@ class Application:
         wd = self.wd
         return wd.find_element_by_css_selector(".posthilit").text == "Unikalny"
 
-    def title_counter_before(self, temat_wiadomosci):
+    def title_kutas(self, zielony_mustang):
         wd = self.wd
         titles = wd.find_elements_by_class_name("topictitle")
-        wanted_titles_before = []
+        tematy_o_konkretnej_nazwie = []
         for title in titles:
-            if title.text == temat_wiadomosci:
-                wanted_titles_before.append(title)
-        return wanted_titles_before
+            if title.text == zielony_mustang:
+                tematy_o_konkretnej_nazwie.append(title)
+        return tematy_o_konkretnej_nazwie
 
-    def title_counter_after(self,temat_wiadomosci):
-        wd = self.wd
-        titles = wd.find_elements_by_class_name("topictitle")
-        wanted_titles_after = []
-        for title in titles:
-            if title.text == temat_wiadomosci:
-                wanted_titles_after.append(title)
-        return wanted_titles_after
 
     def destroy(self):
         self.wd.quit()
