@@ -230,5 +230,10 @@ class Application:
         wd = self.wd
         return wd.find_element_by_css_selector(".posthilit").text == "Unikalny"
 
+    def get_topics_number(self):
+        wd = self.wd
+        #topic = wd.find_element_by_class_name("topictitle")
+        return wd.find_elements_by_class_name("topictitle")
+
     def destroy(self):
         self.wd.quit()
