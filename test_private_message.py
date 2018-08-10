@@ -15,7 +15,7 @@ def test_send_private_message(app):
     app.login(Config.username2, Config.password2)
     app.enter_private_messages()
 
-    app.title_counter(temat_wiadomosci)
+    app.title_counter_before(temat_wiadomosci)
 
     app.logout()
 
@@ -28,7 +28,6 @@ def test_send_private_message(app):
     app.enter_private_messages()
     app.enter_outbox()
     assert app.check_message_title(temat_wiadomosci)
-    app.title_counter(temat_wiadomosci)
     app.logout()
     app.login(Config.username2, Config.password2)
     assert app.get_username_from_nav_bar() == Config.username2
@@ -37,8 +36,8 @@ def test_send_private_message(app):
     app.logout()
     app.login(Config.username1, Config.password1)
     app.enter_private_messages()
-
-    assert len(app.title_counter(temat_wiadomosci)) == len(app.title_counter(temat_wiadomosci)) +1
+    app.title_counter_after(temat_wiadomosci)
+    assert len(app.title_counter_before(temat_wiadomosci)) == len(app.title_counter_after(temat_wiadomosci)) -1
 
     app.enter_sent_messages()
     assert app.wanted_titles
