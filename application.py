@@ -230,10 +230,14 @@ class Application:
         wd = self.wd
         return wd.find_element_by_css_selector(".posthilit").text == "Unikalny"
 
-    def get_topics_number(self):
+    def title_counter(self, temat_wiadomosci):
         wd = self.wd
-        #topic = wd.find_element_by_class_name("topictitle")
-        return wd.find_elements_by_class_name("topictitle")
+        titles = wd.find_elements_by_class_name("topictitle")
+        wanted_titles = []
+        for title in titles:
+            if title.text == temat_wiadomosci:
+                wanted_titles.append(title)
+        return wanted_titles
 
     def destroy(self):
         self.wd.quit()

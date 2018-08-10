@@ -12,6 +12,6 @@ def app(request):
 def test_brudnopis(app):
     app.login(Config.username2, Config.password2)
     app.enter_private_messages()
-    topics = app.wd.find_elements_by_class_name("topictitle")
-    topic = app.wd.find_element_by_class_name("topictitle")
-    print(topics.count(topic))
+    titles = app.wd.find_elements_by_class_name("topictitle")
+    searched_titles = temat_wiadomosci
+    print(len(titles))
