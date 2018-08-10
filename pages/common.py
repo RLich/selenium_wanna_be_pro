@@ -1,6 +1,6 @@
 class Common:
     class SentBox:
-        dupa = ""
+        costam = ""
 
         # app.privmsg.sentbox.metoda
 
