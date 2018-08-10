@@ -14,4 +14,4 @@ def test_brudnopis(app):
     app.enter_private_messages()
     topics = app.wd.find_elements_by_class_name("topictitle")
     topic = app.wd.find_element_by_class_name("topictitle")
-    print(len((topics.count(topic))))
+    print(topics.count(topic))
