@@ -239,5 +239,9 @@ class Application:
                 wanted_titles.append(title)
         return wanted_titles
 
+    def check_site_title(self, site_title):
+        wd = self.wd
+        return wd.title == site_title
+
     def destroy(self):
         self.wd.quit()
