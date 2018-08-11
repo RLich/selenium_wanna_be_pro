@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 from Config.cfg_att import Config
@@ -13,6 +11,6 @@ def app(request):
     return fixture
 
 def test_enter_subforum(app):
-    app.login(username=Config.username1, password=Config.password1)
+    # logowanie użytkownika i przejście do pierwszego subforum w indeksie
+    app.login(Config.username1, Config.password1)
     app.nav_to_first_subforum()
-    time.sleep(3)
