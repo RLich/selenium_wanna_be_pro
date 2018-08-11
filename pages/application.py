@@ -202,7 +202,11 @@ class Application:
 
     def check_subforum_name(self, name_of_subforum):
         wd = self.wd
-        return wd.find_element_by_class_name('forum-title').text == name_of_subforum
+        subfora = wd.find_elements_by_class_name('forum-title')
+        for subforum in subfora:
+            if subforum.text == name_of_subforum:
+                return True
+        return False
 
     def assert_if_user_in_private_messeges(self):
         wd = self.wd
