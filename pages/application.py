@@ -169,6 +169,7 @@ class Application:
         time.sleep(2)
         wd.find_element_by_css_selector(".default-submit-action").click()
         wait.until(expected_conditions.visibility_of_element_located((By.CLASS_NAME, "message-title")))
+
     def waiter(self, wd):
         wait = WebDriverWait(wd, 10)
         return wait
@@ -241,7 +242,7 @@ class Application:
 
     def check_site_title(self, site_title):
         wd = self.wd
-        return wd.title == site_title
+        return wd.title
 
     def destroy(self):
         self.wd.quit()
