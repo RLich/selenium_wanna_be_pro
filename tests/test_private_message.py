@@ -1,7 +1,7 @@
 import pytest
 
 from Config.cfg_att import Config
-from pages.application import Application
+from application import Application
 
 
 # zapracuj na okejkę

@@ -1,6 +1,6 @@
 import pytest
 
-from pages.application import Application
+from application import Application
 
 
 @pytest.fixture

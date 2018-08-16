@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from Config.cfg_att import Config
-from pages.common import Common
+from common import Common
 
 
 class Application:
