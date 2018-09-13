@@ -8,14 +8,12 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from Config.cfg_att import Config
-from common import Common
 
 
 class Application:
     def __init__(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(1)
-        self.common = Common(self)
 
     def open_home_page(self):
         wd = self.wd
